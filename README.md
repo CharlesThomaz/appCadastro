@@ -30,7 +30,7 @@ Este projeto é uma API RESTful para gerenciamento de usuários, construída com
 
 1.  Clone o repositório:
     ```bash
-    git clone https://github.com/charlesthomaz/orm.git
+    git clone https://github.com/CharlesThomaz/orm.git
     ```
 2.  Instale as dependências:
     ```bash
