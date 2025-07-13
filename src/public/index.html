@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulário de Cadastro e Pesquisa</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <main class="container">
+    <section class="form-section">
+      <h1>Cadastro ✨</h1>
+      <form action="http://localhost:3000/user" method="post" class="form">
+        <label for="name">Nome</label>
+        <input type="text" name="nameUser" id="name" placeholder="Digite seu nome" required />
+
+        <label for="email">Email</label>
+        <input type="email" name="emailUser" id="email" placeholder="exemplo@email.com" required />
+
+        <button type="submit" class="btn-primary">Enviar 💖</button>
+      </form>
+    </section>
+
+    <section class="form-section">
+      <h2>Pesquisar Usuário</h2>
+      <form id="formBusca" method="get" class="form">
+        <label for="getByName">Nome</label>
+        <input type="text" id="getByName" name="getByName" placeholder="Digite um nome para buscar" />
+        <button type="submit" class="btn-primary">Buscar</button>
+      </form>
+
+      <div id="resultado" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

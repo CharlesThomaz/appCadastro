@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                  // Versão do JS para saída
+    "module": "ESNext",                  // Tipo de módulo usado (ESModules)
+    "moduleResolution": "Node",          // Resolve imports como no Node
+    "strict": true,                      // Modo estrito (melhor prática)
+    "esModuleInterop": true,             // Para importar CommonJS com import
+    "skipLibCheck": true,                // Ignorar checagem de libs para acelerar
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",                  // Pasta de saída compilada
+    "rootDir": ".",                  // Pasta de código fonte
+    "resolveJsonModule": true            // Permite importar JSON
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
