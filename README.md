@@ -1,81 +1,137 @@
-# Projeto ORM com Knex.js
 
-Este é um projeto de exemplo que demonstra o uso do Knex.js como um construtor de consultas SQL em um ambiente Node.js com TypeScript.
+# ORM - Gerenciador de Usuários
 
 ## Descrição
 
-O projeto consiste em uma API simples para gerenciamento de usuários, utilizando Express.js para o servidor, Knex.js para a comunicação com o banco de dados SQLite e Zod para validação de dados.
-## Preview 
+Este projeto é uma API RESTful para gerenciamento de usuários, construída com Node.js, Express e Knex.js para a comunicação com o banco de dados SQLite. A API permite listar, criar e pesquisar usuários.
 
-![Imagem do app](./src/public/assets/preview.png)
+## Preview
+
+![Preview do Projeto](src/public/assets/preview.png)
 
 ## Tecnologias Utilizadas
 
-- **Node.js**: Ambiente de execução do JavaScript no servidor.
-- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
-- **Express.js**: Framework para construção de APIs web.
-- **Knex.js**: Construtor de consultas SQL para Node.js.
-- **SQLite3**: Banco de dados relacional embarcado.
-- **tsx**: Executa arquivos TypeScript diretamente sem a necessidade de compilação prévia.
-- **Zod**: Biblioteca para validação de esquemas de dados.
+*   **Node.js:** Ambiente de execução JavaScript no servidor.
+*   **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
+*   **Express:** Framework para construção de APIs RESTful.
+*   **Knex.js:** Construtor de consultas SQL para Node.js.
+*   **SQLite3:** Banco de dados relacional embarcado.
+*   **tsx:** Executa arquivos TypeScript e ESM no Node.js de forma nativa.
+*   **Zod:** Biblioteca de validação de esquemas.
 
-## Instalação
+## Primeiros Passos
+
+### Pré-requisitos
+
+*   Node.js (v18 ou superior)
+*   NPM ou Yarn
+
+### Instalação
 
 1.  Clone o repositório:
     ```bash
-    git clone <url-do-repositorio>
+    git clone https://github.com/charlesthomaz/orm.git
     ```
-2.  Acesse o diretório do projeto:
-    ```bash
-    cd orm
-    ```
-3.  Instale as dependências:
+2.  Instale as dependências:
     ```bash
     npm install
     ```
 
-## Scripts Disponíveis
+### Executando o Projeto
 
-No arquivo `package.json`, os seguintes scripts estão disponíveis:
+1.  Execute as migrations para criar as tabelas no banco de dados:
+    ```bash
+    npm run latest
+    ```
+2.  (Opcional) Execute as seeds para popular o banco de dados com dados de exemplo:
+    ```bash
+    npm run seed
+    ```
+3.  Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
 
--   `npm run dev`: Inicia o servidor em modo de desenvolvimento com `watch mode`.
--   `npm run knex -- <comando>`: Executa comandos do Knex.js. Por exemplo, para criar uma nova migração: `npm run knex -- migrate:make nome_da_migracao`.
--   `npm run latest`: Executa as migrações pendentes para atualizar o banco de dados para a versão mais recente.
--   `npm run roolback`: Reverte a última migração executada.
+O servidor estará disponível em `http://localhost:3000`.
+
+## Endpoints da API
+
+A seguir estão os endpoints disponíveis na API:
+
+| Método | Rota            | Descrição                  |
+| :----- | :-------------- | :------------------------- |
+| `GET`  | `/users`        | Lista todos os usuários.   |
+| `POST` | `/users`        | Cria um novo usuário.      |
+| `GET`  | `/users/pesquisar` | Pesquisa um usuário pelo nome. |
+
+### Exemplo de Corpo da Requisição (POST /users)
+
+```json
+{
+  "nameUser": "John Doe",
+  "emailUser": "john.doe@example.com"
+}
+```
+
+## Banco de Dados
+
+O projeto utiliza o Knex.js para gerenciar as migrações e sementes do banco de dados.
+
+### Tabela `tbl_user`
+
+| Coluna      | Tipo     | Restrições        |
+| :---------- | :------- | :---------------- |
+| `idUser`    | `INTEGER`| Chave Primária, Auto-incremento |
+| `nameUser`  | `TEXT`   | Não Nulo          |
+| `emailUser` | `TEXT`   | Não Nulo, Único   |
 
 ## Estrutura do Projeto
 
 ```
-/home/thomaz-alves/Charles/Tech/2Sem2025/orm/
-├───knexfile.ts             # Arquivo de configuração do Knex
-├───package.json
-├───tsconfig.json
-└───src/
-    ├───server.ts           # Arquivo principal do servidor Express
-    ├───controllers/        # Controladores (lógica de requisição/resposta)
-    ├───errors/             # Classes de erro customizadas
-    ├───models/
-    │   ├───database/       # Configuração e instância do banco de dados
-    │   ├───migrations/     # Arquivos de migração do banco de dados
-    │   ├───seeds/          # Arquivos de seed para popular o banco
-    │   └───types/          # Definições de tipos (interfaces)
-    ├───public/             # Arquivos estáticos (HTML, CSS, JS)
-    └───routes/             # Definição das rotas da API
+orm/
+├── src/
+│   ├── controllers/
+│   │   ├── IController.ts
+│   │   └── User-Controller.ts
+│   ├── errors/
+│   │   └── AppError.ts
+│   ├── models/
+│   │   ├── database/
+│   │   │   ├── db.ts
+│   │   │   └── dev.sqlite3
+│   │   ├── migrations/
+│   │   │   └── 20250712231837_criar-tabela-usuario.ts
+│   │   ├── seeds/
+│   │   │   └── inserir-usuarios.ts
+│   │   └── types/
+│   │       └── tipoUser.d.ts
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── assets/
+│   │   │   └── preview.png
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   └── js/
+│   │       └── script.js
+│   ├── routes/
+│   │   ├── route.ts
+│   │   └── user-route.ts
+│   └── server.ts
+├── .gitignore
+├── knexfile.ts
+├── package-lock.json
+├── package.json
+└── tsconfig.json
 ```
 
-## Rotas da API
+## Tratamento de Erros
 
-A API possui as seguintes rotas:
+A API utiliza uma classe `AppError` para padronizar as mensagens de erro. Em caso de erro, a API retornará um JSON com a mensagem de erro e o status code apropriado.
 
--   `GET /`: Rota de boas-vindas.
--   `GET /user`: Retorna uma lista de todos os usuários.
--   `POST /user`: Cria um novo usuário.
--   `GET /user/pesquisar`: Pesquisa usuários por nome.
+## Contribuindo
 
-## Como Contribuir
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-1.  Faça um fork do projeto.
-2.  Crie uma nova branch (`git checkout -b feature/nova-feature`).
-3.  Faça commit das suas alterações (`git commit -m 'Adiciona nova feature'`).
-4.  Faça push para a branch (`git push origin feature/nova-feature`).
-5.  Abra um Pull Request.
+## Licença
+
+Este projeto está licenciado sob a licença ISC.
