@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  front:
+    build:
+      context: ./src/public
+      dockerfile: Dockerfile
+    image: front
+    container_name: front_index
+    ports:
+      - "8001:80"
+    depends_on:
+      - api
+      - postgres
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: api
+    container_name: api
+    ports: 
+      - "3000:3000"
+    env_file:
+      - .env          # Carrega variáveis gerais
+      - .db.env       # Carrega variáveis do banco
+    depends_on:
+      - postgres
+
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .db.env       # Carrega APENAS variáveis do banco
+    volumes:
+      - database:/var/lib/postgresql/data
+
+volumes:
+  database:

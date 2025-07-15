@@ -1,9 +1,9 @@
 import { IController } from "./IController";
 import { Request, Response, NextFunction } from "express";
 import db from "../models/database/db";
-import { AppError } from "../errors/AppError";
 import { TipoUser } from "../models/types/tipoUser";
 import z, { ZodError } from "zod";
+import { AppError } from "../errors/AppError.js";
 
 
 

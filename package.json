@@ -2,21 +2,25 @@
   "name": "orm",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/server.js",
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
-    "knex": "tsx node_modules/knex/bin/cli.js --knexfile ./knexfile.ts ",
-    "roolback": "knex migrate:rollback",
-    "latest": "knex migrate:latest"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "migrate": "tsx node_modules/knex/bin/cli.js --knexfile ./knexfile.ts migrate:latest",
+    "rollback": "tsx node_modules/knex/bin/cli.js --knexfile ./knexfile.ts migrate:rollback",
+    "make": "tsx node_modules/knex/bin/cli.js --knexfile ./knexfile.ts migrate:make"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
     "@types/cors": "^2.8.19",
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
+    "dotenv": "^17.2.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
@@ -24,6 +28,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "knex": "^3.1.0",
+    "pg": "^8.16.3",
     "sqlite3": "^5.1.7",
     "zod": "^4.0.5"
   }
